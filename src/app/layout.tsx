@@ -6,7 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 const iranianSansFont = localFont({
-  src: '../../public/fonts/IranianSans.ttf',
+  src: '/fonts/IranianSans.ttf',
   variable: '--font-iranian-sans',
   display: 'swap', // استفاده از گزینه swap برای بهبود تجربه کاربری در زمان بارگذاری
 });
