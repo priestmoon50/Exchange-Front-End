@@ -1,18 +1,7 @@
-/* تعریف فونت IranianSans */
-@font-face {
-  font-family: 'IranianSans';
-  src: url('/fonts/IranianSans.woff2') format('woff2'),
-       url('/fonts/IranianSans.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
 
-
-/* رنگ‌های پیش‌فرض برای حالت روشن و تاریک */
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --font-iranian-sans: 'IranianSans', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -32,7 +21,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-iranian-sans); /* استفاده از فونت IranianSans */
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
