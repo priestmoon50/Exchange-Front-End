@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { Box, Typography, ToggleButton, ToggleButtonGroup, useMediaQuery, useTheme } from "@mui/material";
 import { useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -8,15 +7,22 @@ import DefaultChart from "./DefaultChart";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
+interface ChartDataItem {
+  timestamp: number;
+  price_btc: number;
+  rate_dollar: number;
+  parity_dollar: number;
+}
+
 const PriceChart: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [timeframe, setTimeframe] = useState("24H");
   const [loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState({
-    priceBitcoin: [],
-    rateDollar: [],
-    parityDollar: [],
+    priceBitcoin: [] as [number, number][],
+    rateDollar: [] as [number, number][],
+    parityDollar: [] as [number, number][],
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -47,9 +53,9 @@ const PriceChart: React.FC = () => {
 
       if (result && result.data && result.data.length > 0) {
         const formattedData = {
-          priceBitcoin: result.data.map((item: any) => [item.timestamp, item.price_btc]),
-          rateDollar: result.data.map((item: any) => [item.timestamp, item.rate_dollar]),
-          parityDollar: result.data.map((item: any) => [item.timestamp, item.parity_dollar]),
+          priceBitcoin: result.data.map((item: ChartDataItem) => [item.timestamp, item.price_btc]),
+          rateDollar: result.data.map((item: ChartDataItem) => [item.timestamp, item.rate_dollar]),
+          parityDollar: result.data.map((item: ChartDataItem) => [item.timestamp, item.parity_dollar]),
         };
         setChartData(formattedData);
       } else {

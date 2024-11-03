@@ -18,7 +18,7 @@ import {
   PaginationItem,
   Select,
   MenuItem,
-  CircularProgress,
+
   Skeleton,
   useMediaQuery,
   SelectChangeEvent,
@@ -55,13 +55,13 @@ const initialData: PriceData[] = Array(30)
 
 const itemsPerPage = 10;
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
+const StyledTableCell = styled(TableCell)(() => ({
   backgroundColor: "#f8f8f8",
   borderBottom: "1px solid #e0e0e0",
   color: "#333",
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
     backgroundColor: "#fafafa",
   },
@@ -77,7 +77,7 @@ const PriceList: React.FC = () => {
   const router = useRouter();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<PriceData[]>(initialData);
+  const [data ] = useState<PriceData[]>(initialData);
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
