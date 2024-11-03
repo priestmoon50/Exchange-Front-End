@@ -1,0 +1,84 @@
+/* src/app/components/Description.module.css */
+
+.description {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    line-height: 1.8;
+    direction: rtl;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: right;
+    color: #333;
+}
+
+.text {
+    font-size: 1rem;
+    color: #555;
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.image {
+    max-width: 600px;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1024px) {
+    .description {
+        padding: 1.5rem 1rem;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .text {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .description {
+        padding: 1rem 0.5rem;
+    }
+
+    .title {
+        font-size: 1.4rem;
+    }
+
+    .text {
+        font-size: 0.9rem;
+    }
+
+    .imageContainer {
+        margin: 1.5rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .text {
+        font-size: 0.85rem;
+    }
+
+    .description {
+        padding: 1rem 0.5rem;
+    }
+}
