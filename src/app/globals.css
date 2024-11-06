@@ -5,6 +5,21 @@
 }
 
 
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSansXRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IRANSans';
+  src: url('/fonts/IRANSansXBold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,13 +36,19 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  
+}
+
+
+* {
+  font-family: 'IRANSans', sans-serif;
 }
 
 /* تنظیمات اصلی برای بدنه سایت */
 body {
   color: var(--foreground);
   background: var(--background);
- 
+  font-family: 'IRANSans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;

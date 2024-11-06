@@ -1,28 +1,8 @@
 // src/app/components/Header.tsx
 
 "use client";
-import React, { useState, MouseEvent } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Box,
-  Menu,
-  MenuItem,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Avatar,
-  Button,
-  Container,
-  useMediaQuery,
-  Fade,
-} from "@mui/material";
-import { Menu as MenuIcon, MoreVert as MoreVertIcon } from "@mui/icons-material";
-import { useTheme } from "@mui/material/styles";
 import Image from "next/image";
 
 const navItems = [
@@ -34,197 +14,144 @@ const navItems = [
 ];
 
 const Header: React.FC = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [activeItem, setActiveItem] = useState<string>("صفحه اصلی");
-
-  const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const toggleDrawer = (open: boolean) => {
-    setDrawerOpen(open);
-  };
 
   const handleNavClick = (item: string) => {
     setActiveItem(item);
   };
 
   return (
-    <AppBar
-      position="sticky"
-      color="transparent"
-      elevation={0}
-      sx={{
-        boxShadow: "8px 8px 16px #babecc, -8px -8px 16px #ffffff",
-        backdropFilter: "blur(10px)",
-        background:
-          "linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(240, 240, 240, 0.8))",
-      }}
-    >
-      <Container maxWidth="lg">
-        <Toolbar disableGutters sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box display="flex" alignItems="center" gap={2}>
-            <Image src="/images/logo.png" alt="Logo" width={80} height={72} />
-          </Box>
+    <header className="sticky top-0 bg-white bg-opacity-80 backdrop-blur-md shadow-md">
+      <div className="container mx-auto flex justify-between items-center p-4">
+        {/* Logo Section */}
+        <div className="flex items-center gap-4">
+          <Image src="/images/logo.png" alt="Logo" width={80} height={72} />
+        </div>
 
-          {!isMobile && (
-            <Box display="flex" gap={3}>
-              {navItems.map((item) => (
-                <Link href={item.href} key={item.label} passHref>
-                  <Button
-                    color="inherit"
-                    onClick={() => handleNavClick(item.label)}
-                    sx={{
-                      fontSize: "1.1rem",
-                      color: item.label === activeItem ? "#3f51b5" : "inherit",
-                      fontWeight: item.label === activeItem ? "bold" : "normal",
-                      position: "relative",
-                      transition: "color 0.3s ease",
-                      "&:hover": {
-                        color: "#5a67d8",
-                        "&::after": {
-                          width: "100%",
-                        },
-                      },
-                      "&::after": {
-                        content: "''",
-                        position: "absolute",
-                        bottom: 0,
-                        left: 0,
-                        height: "2px",
-                        width: item.label === activeItem ? "100%" : "0%",
-                        backgroundColor: "#3f51b5",
-                        transition: "width 0.3s ease",
-                      },
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                </Link>
-              ))}
-            </Box>
-          )}
-
-          <Box display="flex" alignItems="center" gap={2}>
-            {!isMobile && (
-              <Box
-                display="flex"
-                flexDirection="column"
-                alignItems="flex-start"
-                sx={{
-                  backgroundColor: "rgba(255, 255, 255, 0.8)",
-                  borderRadius: 2,
-                  padding: "4px 8px",
-                  boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-                  fontFamily: "IranianSans, sans-serif",
-                }}
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex gap-6">
+          {navItems.map((item) => (
+            <Link href={item.href} key={item.label} passHref>
+              <span
+                onClick={() => handleNavClick(item.label)}
+                className={`relative cursor-pointer text-lg font-medium transition-colors duration-300 ${
+                  item.label === activeItem ? "text-blue-600 font-bold" : "text-gray-800"
+                }`}
               >
-                <Typography variant="body1" fontWeight="bold" fontSize="1.1rem">
-                  علی اسماعیل
-                </Typography>
-                <Typography variant="body2" color="textSecondary" fontSize="1rem">
-                  0912-000-0000
-                </Typography>
-              </Box>
-            )}
-            <Avatar alt="User Avatar" src="/images/user-avatar.webp" sx={{ width: 36, height: 36 }} />
-            <IconButton onClick={handleMenuOpen} color="inherit">
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              disableScrollLock
-              onClose={handleMenuClose}
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              transformOrigin={{ vertical: "top", horizontal: "right" }}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={handleMenuClose} sx={{ fontSize: "1rem" }}>
-                پروفایل
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose} sx={{ fontSize: "1rem" }}>
-                تنظیمات
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose} sx={{ fontSize: "1rem" }}>
-                خروج
-              </MenuItem>
-            </Menu>
-          </Box>
+                {item.label}
+                <span
+                  className={`absolute left-0 bottom-0 h-0.5 bg-blue-600 transition-all duration-300 ${
+                    item.label === activeItem ? "w-full" : "w-0"
+                  }`}
+                ></span>
+              </span>
+            </Link>
+          ))}
+        </nav>
 
-          {isMobile && (
-            <IconButton edge="end" color="inherit" onClick={() => toggleDrawer(true)}>
-              <MenuIcon />
-            </IconButton>
-          )}
-
-          <Drawer
-            anchor="right"
-            open={drawerOpen}
-            onClose={() => toggleDrawer(false)}
-            sx={{
-              "& .MuiPaper-root": {
-                width: 250,
-                borderRadius: "0",
-                backgroundColor: "#ffffff",
-                boxShadow: "4px 0 10px rgba(0, 0, 0, 0.1)",
-              },
-            }}
+        {/* User Info and Avatar */}
+        <div className="hidden md:flex items-center gap-4">
+          <div className="flex flex-col items-start bg-white bg-opacity-90 p-2 rounded-md shadow-md">
+            <span className="font-bold text-lg">علی اسماعیل</span>
+            <span className="text-gray-500 text-sm">0912-000-0000</span>
+          </div>
+          <Image
+            src="/images/user-avatar.webp"
+            alt="User Avatar"
+            width={36}
+            height={36}
+            className="rounded-full"
+          />
+          <button
+            onClick={() => setDrawerOpen(!drawerOpen)}
+            className="text-gray-800 focus:outline-none"
           >
-            <Box
-              role="presentation"
-              onClick={() => toggleDrawer(false)}
-              onKeyDown={() => toggleDrawer(false)}
-              sx={{
-                padding: 2,
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-              }}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <List>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button
+            onClick={() => setDrawerOpen(true)}
+            className="text-gray-800 focus:outline-none"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Drawer */}
+        {drawerOpen && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-end">
+            <div className="bg-white w-64 h-full shadow-lg p-4">
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="mb-6 text-gray-800 focus:outline-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <nav className="flex flex-col gap-4">
                 {navItems.map((item) => (
                   <Link href={item.href} key={item.label} passHref>
-                    <ListItem
-                      onClick={() => handleNavClick(item.label)}
-                      sx={{
-                        padding: "10px 0",
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        color: item.label === activeItem ? "#007bff" : "#333",
-                        cursor: "pointer",
-                        "&:hover": {
-                          color: "#007bff",
-                          backgroundColor: "transparent",
-                        },
-                        transition: "color 0.3s ease",
+                    <span
+                      onClick={() => {
+                        handleNavClick(item.label);
+                        setDrawerOpen(false);
                       }}
+                      className={`text-lg font-medium ${
+                        item.label === activeItem ? "text-blue-600 font-bold" : "text-gray-800"
+                      }`}
                     >
-                      <ListItemText
-                        primary={item.label}
-                        primaryTypographyProps={{
-                          fontSize: "1.1rem",
-                          fontWeight: item.label === activeItem ? "bold" : "normal",
-                          fontFamily: "IranianSans, sans-serif",
-                          textAlign: "right",
-                        }}
-                      />
-                    </ListItem>
+                      {item.label}
+                    </span>
                   </Link>
                 ))}
-              </List>
-            </Box>
-          </Drawer>
-        </Toolbar>
-      </Container>
-    </AppBar>
+              </nav>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   );
 };
 
