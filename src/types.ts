@@ -28,3 +28,22 @@ export interface PaginationProps {
   totalPages: number;
   setCurrentPage: (page: number) => void;
 }
+
+
+
+
+
+export interface NavItemsProps {
+  activeItem: string;
+  onNavClick: (item: string) => void;
+}
+
+export interface MobileMenuButtonProps {
+  onClick: () => void;
+}
+
+export interface MobileDrawerProps {
+  activeItem: string;
+  onClose: () => void;
+  onNavClick: (item: string) => void;
+}
