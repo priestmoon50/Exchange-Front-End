@@ -1,4 +1,5 @@
-// فایل PriceList.tsx
+// src/app/components/PriceList.tsx
+
 "use client";
 
 import React, { useState } from "react";
@@ -64,9 +65,9 @@ const PriceList: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 md:p-10 rtl">
+    <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 rtl">
       <div className="container mx-auto">
-        <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-6 sm:mb-8 md:mb-12 mt-6">
+        <h2 className="text-center text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6 md:mb-8 mt-4">
           لیست قیمت لحظه‌ای ارزهای دیجیتال
         </h2>
         <CategoryFilter />
