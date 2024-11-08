@@ -1,22 +1,18 @@
-// components/Table.tsx
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
+import { TableProps } from '../../types';
 
-interface TableProps {
-  headers: Array<string | JSX.Element>;
-  children: ReactNode;
-}
-
-const Table: FC<TableProps> = ({ headers, children }) => (
+const Table: FC<TableProps> = ({ headers, children, searchBar }) => (
   <div className="overflow-hidden rounded-lg shadow-lg">
     <table className="min-w-full bg-white">
       <thead className="bg-table-header">
         <tr>
+          <th className="px-4 py-4 text-gray-800 text-center align-middle w-[180px]">
+            {searchBar} {/* قرار دادن نوار جستجو در اولین ستون */}
+          </th>
           {headers.map((header, index) => (
             <th
               key={index}
-              className={`px-2 py-1 sm:px-3 sm:py-2 text-gray-800 text-center align-middle ${
-                index === 0 ? 'w-[200px]' : ''
-              }`}
+              className="px-4 py-4 text-gray-800 text-center align-middle w-[180px] text-lg font-semibold text-right"
             >
               {header}
             </th>

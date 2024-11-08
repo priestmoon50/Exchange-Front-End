@@ -6,7 +6,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}", // فایل‌های داخل src در صورت استفاده
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'table-header': '#E3E7EC',  // رنگ سفارشی برای هدر جدول
+      },
+    },
   },
   plugins: [],
 };
