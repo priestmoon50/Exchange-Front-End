@@ -7,6 +7,8 @@ export interface PriceData {
   buy_irt_price: string;
   sell_irt_price: string;
   icon: string;
+  high_irt_price?: string; // اضافه کردن این ویژگی‌ها در صورت وجود در API
+  low_irt_price?: string;
 }
 
 

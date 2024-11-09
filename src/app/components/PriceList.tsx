@@ -2,6 +2,8 @@
 
 "use client";
 
+// src/app/components/PriceList.tsx
+
 import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -29,9 +31,12 @@ const fetchPrices = async (page: number, search: string = ""): Promise<PriceData
 const PriceList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // تنظیم React Query برای دریافت داده‌ها به صورت Real-Time با refetchInterval
   const { data = [], isLoading } = useQuery({
     queryKey: ["prices", currentPage, searchTerm],
     queryFn: () => fetchPrices(currentPage, searchTerm),
+    refetchInterval: 10000, // به‌روزرسانی هر ۱۰ ثانیه
   });
 
   const headers = [

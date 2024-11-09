@@ -1,28 +1,25 @@
+// src/app/components/RealTimePrice.tsx
+
 "use client";
 
-import { Box, Typography, Divider, useTheme } from "@mui/material";
+import { Box, Typography, Divider, useTheme, CircularProgress } from "@mui/material";
 import { FaBitcoin } from "react-icons/fa";
+import { PriceData } from "@/types";
 
 interface RealTimePriceProps {
-  currentPrice?: string;
-  currentPriceUSD?: string;
-  dailyChange?: number;
-  buyPrice?: string;
-  sellPrice?: string;
-  highPrice?: string;
-  lowPrice?: string;
+  priceData?: PriceData; // داده‌های دریافتی از صفحه معامله
 }
 
-const RealTimePrice: React.FC<RealTimePriceProps> = ({
-  currentPrice = "4,940,123,734",
-  currentPriceUSD = "$68,075.98",
-  dailyChange = +1.05,
-  buyPrice = "4,950,000,000",
-  sellPrice = "4,945,000,000",
-  highPrice = "5,000,000,000",
-  lowPrice = "4,000,000,000",
-}) => {
+const RealTimePrice: React.FC<RealTimePriceProps> = ({ priceData }) => {
   const theme = useTheme();
+
+  if (!priceData) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height={300}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ textAlign: "right", color: theme.palette.text.primary, p: 3 }}>
@@ -33,19 +30,19 @@ const RealTimePrice: React.FC<RealTimePriceProps> = ({
       <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
         <Box>
           <Typography variant="h4" fontWeight="700" sx={{ mb: 0.5 }}>
-            {currentPrice} تومان
+            {priceData.sell_irt_price} تومان
           </Typography>
           <Typography variant="body1" color="text.secondary" fontWeight="500" sx={{ textAlign: "left" }}>
-            {currentPriceUSD}
+            {priceData.price} USD
           </Typography>
         </Box>
         <Box display="flex" alignItems="center">
           <Box textAlign="right" sx={{ mr: 1 }}>
             <Typography variant="h6" fontWeight="700">
-              بیت کوین
+              {priceData.fa_name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              BTC
+              {priceData.id}
             </Typography>
           </Box>
           <FaBitcoin size={30} color="#f7931a" />
@@ -56,9 +53,9 @@ const RealTimePrice: React.FC<RealTimePriceProps> = ({
 
       <Box mt={2}>
         <Box display="flex" justifyContent="space-between" mb={1.5}>
-          <Typography component="span" color={dailyChange > 0 ? "success.main" : "error.main"} fontWeight="600">
-            {dailyChange > 0 ? "+" : ""}
-            {dailyChange}%
+          <Typography component="span" color={parseFloat(priceData.daily_change_percent) > 0 ? "success.main" : "error.main"} fontWeight="600">
+            {parseFloat(priceData.daily_change_percent) > 0 ? "+" : ""}
+            {priceData.daily_change_percent}%
           </Typography>
           <Typography variant="body2" color="text.secondary">
             تغییر قیمت امروز
@@ -67,7 +64,7 @@ const RealTimePrice: React.FC<RealTimePriceProps> = ({
 
         <Box display="flex" justifyContent="space-between" mb={1.5}>
           <Typography component="span" color="primary" fontWeight="600">
-            {buyPrice} تومان
+            {priceData.buy_irt_price} تومان
           </Typography>
           <Typography variant="body2" color="text.secondary">
             خرید بیت کوین
@@ -76,7 +73,7 @@ const RealTimePrice: React.FC<RealTimePriceProps> = ({
 
         <Box display="flex" justifyContent="space-between" mb={1.5}>
           <Typography component="span" color="error" fontWeight="600">
-            {sellPrice} تومان
+            {priceData.sell_irt_price} تومان
           </Typography>
           <Typography variant="body2" color="text.secondary">
             فروش بیت کوین
@@ -85,7 +82,7 @@ const RealTimePrice: React.FC<RealTimePriceProps> = ({
 
         <Box display="flex" justifyContent="space-between" mb={1.5}>
           <Typography component="span" color="primary" fontWeight="600">
-            {highPrice} تومان
+            {priceData.high_irt_price} تومان
           </Typography>
           <Typography variant="body2" color="text.secondary">
             بالاترین قیمت ۲۴ ساعت
@@ -94,7 +91,7 @@ const RealTimePrice: React.FC<RealTimePriceProps> = ({
 
         <Box display="flex" justifyContent="space-between">
           <Typography component="span" color="error" fontWeight="600">
-            {lowPrice} تومان
+            {priceData.low_irt_price} تومان
           </Typography>
           <Typography variant="body2" color="text.secondary">
             پایین‌ترین قیمت ۲۴ ساعت

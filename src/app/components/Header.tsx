@@ -136,7 +136,7 @@ const MobileMenuButton: React.FC<MobileMenuButtonProps> = ({ onClick }) => (
 
 // کامپوننت کشوی موبایل با tabindex و focus improvements
 const MobileDrawer: React.FC<MobileDrawerProps> = ({ activeItem, onClose, onNavClick }) => (
-  <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-end transition-opacity">
+  <div className="fixed inset-0 z-50 bg-white bg-opacity-50 flex justify-end transition-opacity">
     <div className="bg-white w-full h-full shadow-lg p-4 pt-8">
       <button onClick={onClose} className="mb-6 text-gray-800 focus:outline-none" aria-label="Close mobile menu">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
