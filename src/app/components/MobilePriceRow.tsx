@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { PriceData } from "../../types";
 
 interface MobilePriceRowProps {
@@ -7,18 +7,10 @@ interface MobilePriceRowProps {
 }
 
 const MobilePriceRow: React.FC<MobilePriceRowProps> = ({ item }) => {
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleButtonClick = () => router.push(`/currency-info/${item.id}`);
   const dailyChangePercent = parseFloat(item.daily_change_percent);
   const isNegativeChange = dailyChangePercent < 0;
-
-  const getDailyChangeClass = () =>
-    isNegativeChange ? "text-red-500" : "text-green-500";
-
-  const toPersianDigits = (number: number | string) =>
-    number.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[parseInt(d)]);
 
   const formatPrice = (price: string | number) =>
     toPersianDigits(
@@ -28,51 +20,47 @@ const MobilePriceRow: React.FC<MobilePriceRowProps> = ({ item }) => {
       }).format(typeof price === "string" ? parseFloat(price) : price)
     );
 
-  const toggleOpen = () => setIsOpen(!isOpen);
+  const toPersianDigits = (number: number | string) =>
+    number.toString().replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[parseInt(d)]);
+
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="md:hidden bg-white shadow rounded-lg p-4 mb-2 border border-gray-200 w-full mx-auto">
-      {/* ردیف اصلی با درصد تغییر، ارزش دلاری و نام با آیکون در راست */}
+    <div className="md:hidden bg-white shadow rounded-lg p-4 mb-2 border border-gray-200 w-full max-w-md mx-auto">
       <div
-        className="flex items-center justify-between mb-3 cursor-pointer"
+        className="flex items-center justify-between mb-3 cursor-pointer transition-colors duration-300 hover:bg-gray-100"
         onClick={toggleOpen}
       >
-        {/* درصد تغییرات */}
-        <div className={`text-left ${getDailyChangeClass()} font-semibold text-sm`}>
+        <div className="text-center font-bold text-base">
+          {formatPrice(item.price)}$
+        </div>
+        <div className={`text-left ${isNegativeChange ? "text-red-500" : "text-green-500"} font-semibold text-sm`}>
           {isNegativeChange ? "" : "+"}
           {toPersianDigits(dailyChangePercent.toFixed(2))}%
         </div>
-
-        {/* ارزش دلاری */}
-        <div className="text-center font-bold">
-          {formatPrice(item.price)}$
-        </div>
-
-        {/* نام و آیکون ارز */}
         <div className="flex items-center gap-2 text-right">
-          <img src={item.icon} alt={item.fa_name} className="w-5 h-5" />
-          <span className="font-bold">{item.fa_name}</span>
+          <img src={item.icon} alt={item.fa_name} className="w-6 h-6 rounded-full" />
+          <span className="font-semibold text-sm">{item.fa_name}</span>
         </div>
       </div>
-
-      {/* بخش جزئیات که فقط در صورت باز بودن نمایش داده می‌شود */}
       {isOpen && (
         <div className="text-right text-gray-700">
-          <div className="mt-2">
-            <span className="text-gray-500">فروش به والت: </span>
-            {formatPrice(item.sell_irt_price)} تومان
+          <div className="mt-2 flex justify-between">
+            <span className="font-medium">{formatPrice(item.sell_irt_price)} تومان</span>
+            <span className="text-gray-500 text-sm">:فروش به والت </span>
           </div>
-          <div className="mt-1">
-            <span className="text-gray-500">خرید از والت: </span>
-            {formatPrice(item.buy_irt_price)} تومان
+          <div className="mt-1 flex justify-between">
+            <span className="font-medium">{formatPrice(item.buy_irt_price)} تومان</span>
+            <span className="text-gray-500 text-sm">:خرید از والت </span>
           </div>
-          <div className="flex justify-center mt-3">
-            <button
-              onClick={handleButtonClick}
-              className="w-full max-w-[120px] h-[40px] rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-md transition-transform duration-300 transform hover:scale-105"
+          <div className="flex justify-center mt-4">
+            <Link
+              href={`/currency-info/${item.id}`}
+              prefetch={true}
+              className="w-full max-w-[120px] h-[40px] rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-md transition-transform duration-300 transform hover:scale-105 active:scale-95 flex items-center justify-center"
             >
               معامله
-            </button>
+            </Link>
           </div>
         </div>
       )}

@@ -1,7 +1,7 @@
 // src/app/components/PriceRow.tsx
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { PriceData } from "../../types";
 import MobilePriceRow from "./MobilePriceRow";
 
@@ -10,10 +10,6 @@ interface PriceRowProps {
 }
 
 const PriceRow: React.FC<PriceRowProps> = ({ item }) => {
-  const router = useRouter();
-
-  const handleButtonClick = () => router.push(`/currency-info/${item.id}`);
-
   const dailyChangePercent = parseFloat(item.daily_change_percent);
   const isNegativeChange = dailyChangePercent < 0;
 
@@ -33,7 +29,9 @@ const PriceRow: React.FC<PriceRowProps> = ({ item }) => {
     return (
       <td className="price-cell w-[100px] sm:w-[150px] px-3 py-2 text-right">
         <div className="flex justify-end items-center gap-2 font-mono">
-          <span className="text-right text-xs sm:text-sm">{formattedPrice}</span>
+          <span className="text-right text-xs sm:text-sm">
+            {formattedPrice}
+          </span>
           <span className="whitespace-nowrap text-xs">{unit}</span>
         </div>
       </td>
@@ -42,12 +40,15 @@ const PriceRow: React.FC<PriceRowProps> = ({ item }) => {
 
   const renderButton = () => (
     <td className="w-full sm:w-[120px] px-4 py-2 text-center align-middle">
-      <button
-        onClick={handleButtonClick}
-        className="w-full sm:w-[100px] h-[40px] rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow transition-transform duration-300 transform hover:scale-105"
-      >
-        معامله
-      </button>
+      <div className="flex justify-center">
+        <Link
+          href={`/currency-info/${item.id}`}
+          prefetch={true}
+          className="w-full sm:w-[100px] h-[40px] rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow transition-transform duration-300 transform hover:scale-105 flex items-center justify-center"
+        >
+          معامله
+        </Link>
+      </div>
     </td>
   );
 
@@ -90,8 +91,6 @@ const PriceRow: React.FC<PriceRowProps> = ({ item }) => {
       </tr>
     </>
   );
-  
-  
 };
 
 export default PriceRow;
