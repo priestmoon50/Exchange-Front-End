@@ -24,7 +24,7 @@ This project is a front-end UI for a cryptocurrency exchange, designed as a samp
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Exchange-Front-End.git
+   git clone [https://github.com/yourusername/Exchange-Front-End.git](https://github.com/priestmoon50/Exchange-Front-End.git)
    cd Exchange-Front-End
    npm install
    npm run dev
